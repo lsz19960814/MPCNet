@@ -1,0 +1,52 @@
+# net architecture
+architecture: lenet
+
+# log and checkpoint
+data_path: ./data
+ckpt_path: ./
+ckpt_name: lenet
+
+# datasets
+num_classes: 2
+dataset: cifar10 
+
+# training parameters
+use_gpu: True
+input_size: 32
+epochs: 500
+batch_size: 128
+test_batch: 1000
+eval_freq: 2
+workers: 4
+
+# optimizer
+optimize:
+  momentum: 0.9
+  weight_decay: 0.0001
+  nesterov: True
+
+# regularization
+mixup: False
+mixup_alpha: 0.4
+
+augmentation:
+  normalize: True
+  random_crop: True
+  random_horizontal_filp: True
+  cutout: False
+  holes: 1
+  length: 8
+
+# learning rate scheduler
+lr_scheduler:
+  # type: STEP or COSINE or HTD
+  type: STEP    
+  base_lr: 0.01
+  # only for STEP
+  lr_epochs: [300, 400, 450] 
+  lr_mults: 0.2
+  # for HTD and COSINE
+  min_lr: 0.0
+  # only for HTD
+  lower_bound: -6.0
+  upper_bound: 3.0 
