@@ -15,7 +15,6 @@ import torch.nn as nn
 from dataloader import get_topo_dataloader
 import copy
 import numpy as np
-# dataset and TAMPG
 
 def get_stock_loader():
     Mode = 'train'
@@ -102,8 +101,6 @@ def get_stock_loader():
     print_model_parameters(model, only_num=False)
 
     model.load_state_dict(torch.load(file_dir+'/experiments/Stock/20230310103326/best_model.pth'))
-    #model.load_state_dict(torch.load('/gs/home/by1809107/lsz/MPCNet/PeMSD8/experiments/PEMSD8/20230310103326/best_model.pth'))
-    #model.load_state_dict(torch.load('E:/code/tamp_trick/trick/PeMSD8/experiments/PEMSD8/20230302205010/best_model.pth'))
 
     train_loader, test_loader, all_t, all_i, scalar = get_topo_dataloader(args, data_type,
                                                                 normalizer=args.normalizer,
