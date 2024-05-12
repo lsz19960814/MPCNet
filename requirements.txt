@@ -1,0 +1,8 @@
+easydict>=1.9
+future>=0.17.1
+tensorboard>=1.14.0
+pynauty=0.6.0
+pyunicorn=0.6.1
+torch>=1.7.1
+networkx<=2.3
+keras=2.4.3
