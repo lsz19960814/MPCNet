@@ -74,7 +74,7 @@ def triple_data_loader(X, PI, Y, L, D, T = [], I = [], batch_size = 36, shuffle=
 
 def get_topo_dataloader(args, data_type, normalizer = 'std', tod=False, dow=False, weather=False, single=False):
     #load raw dataset
-    data,label,test_X,test_y,test_t,test_i,all_t,all_i = uea.get_stock_dataset()
+    data,label,test_X,test_y,test_t,test_i,all_t,all_i = uea.get_stock_dataset(data_type)
     data, scaler = normalize_dataset(data, normalizer, args.column_wise)
     topo_data = load_topo_dataset(data_type,data.shape[0])[0:data.shape[0],:,:]
     topo_test_data = topo_data[0:test_X.shape[0],:,:]

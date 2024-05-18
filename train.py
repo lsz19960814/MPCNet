@@ -28,11 +28,15 @@ from utils import (
 )
 
 parser = argparse.ArgumentParser(description="PyTorch CIFAR Dataset Training")
-parser.add_argument("--work-path", required=True, type=str)
+#parser.add_argument("--work-path", required=True, type=str)
+parser.add_argument("--data_type", required=True, type=str)
 parser.add_argument("--resume", action="store_true", help="resume from checkpoint")
 parser.add_argument("--need_train", action="store_true", help="need train")
 
 args = parser.parse_args()
+
+args.work_path = './experiments/cifar10/lenet'
+
 logger = Logger(
     log_file_name=args.work_path + "/log.txt",
     log_level=logging.DEBUG,
@@ -229,7 +233,7 @@ def main():
     # load training data, do data augmentation and get data loader
     
     if(args.need_train):
-        train_loader, test_loader = get_PEM_data(_w = 20,_k = 1,xw_list =[1],config = config,Dict_need=False )#
+        train_loader, test_loader = get_PEM_data(_w = 20,_k = 1,xw_list =[1],config = config, data_type = args.data_type, Dict_need=False )#
         logger.info("            =======  Training  =======\n")
         for epoch in range(last_epoch + 1, config.epochs):
             lr = adjust_learning_rate(optimizer, epoch, config)
@@ -243,7 +247,7 @@ def main():
                 test_pre_right,test_pre = test(test_loader, net, criterion, optimizer, epoch, device)
                 
         writer.close()
-        torch.save(net.state_dict(), 'parameter.pkl')
+        torch.save(net.state_dict(), args.data_type+'_parameter.pkl')
         logger.info(
             "======== Training Finished.   best_test_acc: {:.3f}% ========".format(
                 best_prec
@@ -252,11 +256,16 @@ def main():
     else:
         _w = 20
         _k = 1
-        train_loader,test_loader, val_X,val_y,val_t,val_i = get_PEM_data(_w = _w, _k = _k, xw_list =[1], config = config, Dict_need=True)#
-        net.load_state_dict(torch.load('parameter.pkl'))
-        test(test_loader, net, criterion, optimizer, 0, device)
+        train_loader,test_loader, test_X,test_y,test_t,test_i = get_PEM_data(_w = _w, _k = _k, xw_list =[1], config = config, data_type = args.data_type, Dict_need=True)#
+        test_dict = {'y': test_y, 'stock': test_t, 'date': test_i}
+        net.load_state_dict(torch.load(args.data_type+'_parameter.pkl'))
+        #test(test_loader, net, criterion, optimizer, 0, device)
+
         test_pre_right,test_pre = test(test_loader, net, criterion, optimizer, 0, device)
-    
+        test_dict['right'] = test_pre_right
+        test_dict['pre'] = test_pre
+        test_prop_fra = pd.DataFrame(test_dict)
+        test_prop_fra.to_excel(now_file+'/result/'+args.data_type+'.xlsx')
 
 if __name__ == "__main__":
     main()

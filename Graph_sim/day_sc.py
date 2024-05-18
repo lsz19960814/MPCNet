@@ -24,7 +24,7 @@ from multiprocessing import Pool
 import Feature
 
 #PWD = '/root/meta_stra_framwork/'
-PWD = '/gs/home/by1809107/lsz/python_code/trick/trick/'#os.path.dirname(os.path.realpath(__file__))
+PWD = '/gs/home/by1809107/lsz/tamp_trick/trick/'#os.path.dirname(os.path.realpath(__file__))
 
 warnings.filterwarnings("ignore")
 
@@ -98,6 +98,7 @@ def make_price_data(i,price_data,features,x_w):
 def load_stock(s,x_column):
 
     df = pd.read_csv(os.path.join(PWD, 'new_day_data_csv', s), index_col=0)
+    #df = pd.read_csv(os.path.join(PWD, 'us_stock_30', s), index_col=0)
     fea = Feature.get_features(df)
     df[x_column] = fea.loc[df.index,x_column]
     df.set_index(df.index.astype('str'), inplace=True)
@@ -167,10 +168,11 @@ def batch_by_date(input_):
         return {'x': np.array([]), 'y': np.array([]), 't': np.array([]),'i':np.array([])}
 def time_series_gen(_w,_k,x_w):
     df = global_df['999999.XSHG.csv']
+    #df = global_df['AAPL.csv']
 
-    ti = df['20191207':'20201231'].index  # train
-    vi = df['20191207':'20201231'].index  # validation
-    ti_ = df['20210101':'20211231'].index   # test
+    ti = df['20201207':'20211231'].index  # train
+    vi = df['20201207':'20211231'].index  # validation
+    ti_ = df['20220101':'20221231'].index   # test
 
     # train
     pool = Pool(22)
@@ -204,12 +206,14 @@ if __name__ == '__main__':
     x_column = ['close_10_sma','close_10_ema','kdjk_10','kdjd_10','rsi_10','macd','wr_10'
                         ,'cci_10','mtm_10']
     global_df = {f: load_stock(f,x_column) for f in os.listdir(os.path.join(PWD, 'new_day_data_csv'))}
+    #global_df = {f: load_stock(f,x_column) for f in os.listdir(os.path.join(PWD, 'us_stock_30'))}
     y_w = 1
     y_k = 0
     atrr_len = 9
     index_name = 'close'
     files = os.listdir(os.path.join(PWD, 'new_day_data_csv'))
-    files = set(files) - set(['999999.XSHG.csv'])
+    #files = os.listdir(os.path.join(PWD, 'us_stock_30'))
+    files = set(files) - set(['999999.XSHG.csv']) #us data should delete
     w_list = [20]
     k_list = [1]
     xw_list = [40]

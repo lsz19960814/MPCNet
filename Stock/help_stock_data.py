@@ -16,13 +16,13 @@ from dataloader import get_topo_dataloader
 import copy
 import numpy as np
 
-def get_stock_loader():
+def get_stock_loader(data_type):
     Mode = 'train'
     DEBUG = 'True'
     DATASET = 'Stock' 
     DEVICE = 'cuda:0'
     MODEL = 'MPCNETs'
-    data_type = '2021' # 2020 or 2021 or 2022 or us for Stock dataset
+    #data_type = '2021' # 2020 or 2021 or 2022 or us for Stock dataset
 
     #get configuration
     config_file = '{}_{}.conf'.format(DATASET, MODEL)
@@ -100,7 +100,8 @@ def get_stock_loader():
             nn.init.uniform_(p)
     print_model_parameters(model, only_num=False)
 
-    model.load_state_dict(torch.load(file_dir+'/experiments/Stock/20230310103326/best_model.pth'))
+    model.load_state_dict(torch.load(file_dir+'/experiments/Stock/'+data_type+'/best_model_2.pth'))
+    #torch.save(model.state_dict(), file_dir+'/experiments/Stock/'+data_type+'/best_model_2.pth')
 
     train_loader, test_loader, all_t, all_i, scalar = get_topo_dataloader(args, data_type,
                                                                 normalizer=args.normalizer,

@@ -152,9 +152,9 @@ def get_data_loader(transform_train, transform_test, config):
     return train_loader, test_loader
 
 
-def get_PEM_data(_w,_k,xw_list,config,Dict_need = False):
+def get_PEM_data(_w,_k,xw_list, config, data_type, Dict_need = False):
     
-    train_X, train_y, test_X, test_y, test_t, test_i = get_stock_loader()
+    train_X, train_y, test_X, test_y, test_t, test_i = get_stock_loader(data_type)
 
     train_y[train_y == -1] = 0
     for i in range(len(train_X)):

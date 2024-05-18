@@ -10,14 +10,14 @@ import torch
 
 PWD = os.path.dirname(os.path.realpath(__file__))
 
-def load_dataset(f):
-    print('path',os.path.join(PWD, 'dataset/', '%s.pickle' % f))
-    with open(os.path.join(PWD, 'dataset/', '%s.pickle' % f), 'rb') as fp:
+def load_dataset(f,data_type):
+    print('path',os.path.join(PWD, 'dataset/'+data_type+'_test_TP/', '%s.pickle' % f))
+    with open(os.path.join(PWD, 'dataset/'+data_type+'_test_TP/', '%s.pickle' % f), 'rb') as fp:
         dataset = pickle.load(fp)
     return dataset
 
-def get_stock_dataset():
-    dataset = load_dataset('raw_xyt_T%s_yb1' % 20)
+def get_stock_dataset(data_type):
+    dataset = load_dataset('raw_xyt_T%s_yb1' % 20, data_type)
     train_X = dataset['train'][0]['x']
     train_y = dataset['train'][0]['y']
     for i in range(len(dataset['train'])):
