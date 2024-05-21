@@ -98,7 +98,7 @@ def get_stock_loader(data_type):
             nn.init.uniform_(p)
     print_model_parameters(model, only_num=False)
 
-    model.load_state_dict(torch.load(file_dir+'/experiments/Stock/'+data_type+'/best_model_2.pth'))
+    model.load_state_dict(torch.load(file_dir+'/experiments/Stock/'+data_type+'/best_model.pth'))
     #torch.save(model.state_dict(), file_dir+'/experiments/Stock/'+data_type+'/best_model_2.pth')
 
     train_loader, test_loader, all_t, all_i, scalar = get_topo_dataloader(args, data_type,

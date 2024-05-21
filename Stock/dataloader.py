@@ -77,7 +77,7 @@ def get_topo_dataloader(args, data_type, normalizer = 'std', tod=False, dow=Fals
     data,label,test_X,test_y,test_t,test_i,all_t,all_i = uea.get_stock_dataset(data_type)
     data, scaler = normalize_dataset(data, normalizer, args.column_wise)
     topo_data = load_topo_dataset(data_type,data.shape[0])[0:data.shape[0],:,:]
-    topo_test_data = topo_data[0:test_X.shape[0],:,:]
+    topo_test_data = load_topo_dataset(data_type,test_X.shape[0])[0:test_X.shape[0],:,:]#topo_data[0:test_X.shape[0],:,:]
 
     single = False
     x_tra, y_tra, l_tra = Add_Window_Horizon(data, label, args.lag, args.horizon, single)
@@ -86,7 +86,7 @@ def get_topo_dataloader(args, data_type, normalizer = 'std', tod=False, dow=Fals
     topo_test = MPG_Window_Horizon(topo_test_data, args.lag, args.horizon, single)
     
     print('Train: x, MPG, y , label , ori_data ->', x_tra.shape, topo_tra.shape, y_tra.shape, l_tra.shape, data[args.lag+args.horizon-1:].shape)
-    print('Val: x, MPG, y, label , ori_data ->', x_test.shape, topo_test.shape, y_test.shape, l_test.shape, test_X[args.lag+args.horizon-1:].shape)
+    print('Test: x, MPG, y, label , ori_data ->', x_test.shape, topo_test.shape, y_test.shape, l_test.shape, test_X[args.lag+args.horizon-1:].shape)
     
     ##############get triple dataloader######################
     train_dataloader = triple_data_loader(x_tra, topo_tra, y_tra, l_tra, data[args.lag+args.horizon-1:], batch_size = args.batch_size, shuffle=False, drop_last=True)
