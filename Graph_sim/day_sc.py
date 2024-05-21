@@ -24,7 +24,7 @@ from multiprocessing import Pool
 import Feature
 
 #PWD = '/root/meta_stra_framwork/'
-PWD = os.path.dirname(os.path.realpath(__file__))
+PWD = '/gs/home/by1809107/lsz/tamp_trick/trick/'#os.path.dirname(os.path.realpath(__file__))
 
 warnings.filterwarnings("ignore")
 
@@ -170,8 +170,8 @@ def time_series_gen(_w,_k,x_w):
     df = global_df['999999.XSHG.csv']
     #df = global_df['AAPL.csv']
 
-    ti = df['20201207':'20211231'].index  # train
-    vi = df['20201207':'20211231'].index  # validation
+    ti = df['20211229':'20211231'].index  # train
+    vi = df['20211229':'20211231'].index  # validation
     ti_ = df['20220101':'20221231'].index   # test
 
     # train
