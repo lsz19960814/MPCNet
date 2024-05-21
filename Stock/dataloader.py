@@ -77,7 +77,7 @@ def get_topo_dataloader(args, data_type, normalizer = 'std', tod=False, dow=Fals
     data,label,test_X,test_y,test_t,test_i,all_t,all_i = uea.get_stock_dataset(data_type)
     data, scaler = normalize_dataset(data, normalizer, args.column_wise)
     topo_data = load_topo_dataset(data_type,data.shape[0])[0:data.shape[0],:,:]
-    topo_test_data = load_topo_dataset(data_type,test_X.shape[0])[0:test_X.shape[0],:,:]#topo_data[0:test_X.shape[0],:,:]
+    topo_test_data = load_topo_dataset(data_type,test_X.shape[0])[0:test_X.shape[0],:,:]
 
     single = False
     x_tra, y_tra, l_tra = Add_Window_Horizon(data, label, args.lag, args.horizon, single)
