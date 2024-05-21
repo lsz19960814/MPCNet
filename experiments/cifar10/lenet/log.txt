@@ -1,0 +1,24 @@
+[2024-05-21 13:52:49,625] - [train.py line:184] : {'architecture': 'lenet', 'data_path': './data', 'ckpt_path': './', 'ckpt_name': 'lenet', 'num_classes': 2, 'dataset': 'cifar10', 'use_gpu': True, 'input_size': 32, 'epochs': 500, 'batch_size': 128, 'test_batch': 1000, 'eval_freq': 2, 'workers': 4, 'optimize': {'momentum': 0.9, 'weight_decay': 0.0001, 'nesterov': True}, 'mixup': False, 'mixup_alpha': 0.4, 'augmentation': {'normalize': True, 'random_crop': True, 'random_horizontal_filp': True, 'cutout': False, 'holes': 1, 'length': 8}, 'lr_scheduler': {'type': 'STEP', 'base_lr': 0.01, 'lr_epochs': [300, 400, 450], 'lr_mults': 0.2, 'min_lr': 0.0, 'lower_bound': -6.0, 'upper_bound': 3.0}}
+[2024-05-21 13:52:49,627] - [train.py line:188] : LeNet(
+  (conv_1): Conv1d(9, 9, kernel_size=(1,), stride=(1,))
+  (attn): SelfAttention(
+    (wq): Linear(in_features=180, out_features=180, bias=False)
+    (wk): Linear(in_features=180, out_features=180, bias=False)
+    (wv): Linear(in_features=180, out_features=180, bias=False)
+  )
+  (fc_3): Linear(in_features=180, out_features=2, bias=True)
+)
+[2024-05-21 13:52:49,629] - [train.py line:189] :  == total parameters: 97652
+[2024-05-21 13:53:42,256] - [train.py line:184] : {'architecture': 'lenet', 'data_path': './data', 'ckpt_path': './', 'ckpt_name': 'lenet', 'num_classes': 2, 'dataset': 'cifar10', 'use_gpu': True, 'input_size': 32, 'epochs': 500, 'batch_size': 128, 'test_batch': 1000, 'eval_freq': 2, 'workers': 4, 'optimize': {'momentum': 0.9, 'weight_decay': 0.0001, 'nesterov': True}, 'mixup': False, 'mixup_alpha': 0.4, 'augmentation': {'normalize': True, 'random_crop': True, 'random_horizontal_filp': True, 'cutout': False, 'holes': 1, 'length': 8}, 'lr_scheduler': {'type': 'STEP', 'base_lr': 0.01, 'lr_epochs': [300, 400, 450], 'lr_mults': 0.2, 'min_lr': 0.0, 'lower_bound': -6.0, 'upper_bound': 3.0}}
+[2024-05-21 13:53:42,258] - [train.py line:188] : LeNet(
+  (conv_1): Conv1d(9, 9, kernel_size=(1,), stride=(1,))
+  (attn): SelfAttention(
+    (wq): Linear(in_features=180, out_features=180, bias=False)
+    (wk): Linear(in_features=180, out_features=180, bias=False)
+    (wv): Linear(in_features=180, out_features=180, bias=False)
+  )
+  (fc_3): Linear(in_features=180, out_features=2, bias=True)
+)
+[2024-05-21 13:53:42,260] - [train.py line:189] :  == total parameters: 97652
+[2024-05-21 13:54:44,622] - [train.py line:132] :  === Validate ===
+[2024-05-21 13:54:47,280] - [train.py line:151] :    == test loss: 0.953 | test acc: 68.843% | test 0 pred  0.691% | test 1 pred  0.685% | test 2 pred  0.000%
