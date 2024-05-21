@@ -1,15 +1,15 @@
-from MPCGCN import TAMPSTGCNCNN
+from MPCGCN import MPCSTGCNCNN
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-class TAMPGCRNCNNCell(nn.Module):
+class MPCGCRNCNNCell(nn.Module):
     def __init__(self, node_num, dim_in, dim_out, window_len, link_len, embed_dim):
-        super(TAMPGCRNCNNCell, self).__init__()
+        super(MPCGCRNCNNCell, self).__init__()
         self.node_num = node_num
         self.hidden_dim = dim_out
-        self.gate = TAMPSTGCNCNN(dim_in+self.hidden_dim, 2*dim_out, window_len, link_len, embed_dim)
-        self.update = TAMPSTGCNCNN(dim_in+self.hidden_dim, dim_out, window_len, link_len, embed_dim)
+        self.gate = MPCSTGCNCNN(dim_in+self.hidden_dim, 2*dim_out, window_len, link_len, embed_dim)
+        self.update = MPCSTGCNCNN(dim_in+self.hidden_dim, dim_out, window_len, link_len, embed_dim)
 
     def forward(self, x, state, x_full, node_embeddings, fixed_adj, adj, stay_cost, jump_cost, MPG):
         #x: B, num_nodes, input_dim

@@ -48,11 +48,5 @@ def fractional_fltr(adj, number_nodes, sigma, gamma):
     fractional_fltr = fractional_fltr * power_Dg_r
     return fractional_fltr
 
-trans_adj = get_adjacency_matrxix(dataset= 'PEMS04', number_nodes= 307)
-#frac_fltr = fractional_fltr(adj= trans_adj, number_nodes= 307, sigma= 0.5, gamma= 2.)
-
-sp.save_npz('PEMSD4_adj.npz', trans_adj)
-#test = sp.load_npz('PEMSD4_fltr.npz')
-
 
 

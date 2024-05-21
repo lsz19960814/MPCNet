@@ -28,7 +28,6 @@ from utils import (
 )
 
 parser = argparse.ArgumentParser(description="PyTorch CIFAR Dataset Training")
-#parser.add_argument("--work-path", required=True, type=str)
 parser.add_argument("--data_type", required=True, type=str)
 parser.add_argument("--resume", action="store_true", help="resume from checkpoint")
 parser.add_argument("--need_train", action="store_true", help="need train")
@@ -63,15 +62,11 @@ def train(train_loader, net, criterion, optimizer, epoch, device):
             inputs, targets_a, targets_b, lam = mixup_data(
                 inputs, targets, config.mixup_alpha, device
             )
-            #print('input',inputs.size())
+            
             outputs = net(inputs)
-            #print('output',output.size)
             loss = mixup_criterion(criterion, outputs, targets_a, targets_b, lam)
         else:
-            #print('input',inputs.size())
             outputs = net(inputs)
-            #print('output',outputs.size())
-            #print('targets',outputs,targets)
             loss = criterion(outputs, targets)
 
         # zero the gradient buffers
@@ -152,20 +147,13 @@ def test(test_loader, net, criterion, optimizer, epoch, device):
             correct += predicted.eq(targets).sum().item()
             y_true += targets.cpu().numpy().tolist()
             y_pre += predicted.cpu().numpy().tolist()
-        #print('tar',targets)
-        #print('pre',predicted)
+        
     logger.info(
         "   == test loss: {:.3f} | test acc: {:6.3f}% | test 0 pred {:6.3f}% | test 1 pred {:6.3f}% | test 2 pred {:6.3f}%".format(
             test_loss / (batch_index + 1), 100.0 * correct / total, precision_score(y_true, y_pre, labels=[0], average=None)[0], precision_score(y_true, y_pre, labels=[1], average=None)[0],precision_score(y_true, y_pre, labels=[2], average=None)[0]
         )
     )
-    '''
-    logger.info(
-        "   == test loss: {:.3f} | test acc: {:6.3f}%".format(
-            test_loss / (batch_index + 1), 100.0 * correct / total
-        )
-    )
-    '''
+
     test_loss = test_loss / (batch_index + 1)
     test_acc = correct / total
     writer.add_scalar("test_loss", test_loss, global_step=epoch)
@@ -229,8 +217,6 @@ def main():
             best_prec, last_epoch = load_checkpoint(
                 ckpt_file_name, net, optimizer=optimizer
             )
-
-    # load training data, do data augmentation and get data loader
     
     if(args.need_train):
         train_loader, test_loader = get_PEM_data(_w = 20,_k = 1,xw_list =[1],config = config, data_type = args.data_type, Dict_need=False )#
@@ -259,7 +245,6 @@ def main():
         train_loader,test_loader, test_X,test_y,test_t,test_i = get_PEM_data(_w = _w, _k = _k, xw_list =[1], config = config, data_type = args.data_type, Dict_need=True)#
         test_dict = {'y': test_y, 'stock': test_t, 'date': test_i}
         net.load_state_dict(torch.load(args.data_type+'_parameter.pkl'))
-        #test(test_loader, net, criterion, optimizer, 0, device)
 
         test_pre_right,test_pre = test(test_loader, net, criterion, optimizer, 0, device)
         test_dict['right'] = test_pre_right

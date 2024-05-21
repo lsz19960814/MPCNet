@@ -24,7 +24,7 @@ from multiprocessing import Pool
 import Feature
 
 #PWD = '/root/meta_stra_framwork/'
-PWD = '/gs/home/by1809107/lsz/tamp_trick/trick/'#os.path.dirname(os.path.realpath(__file__))
+PWD = os.path.dirname(os.path.realpath(__file__))
 
 warnings.filterwarnings("ignore")
 

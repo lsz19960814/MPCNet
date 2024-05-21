@@ -5,7 +5,7 @@ sys.path.append(file_dir)
 import argparse
 import configparser
 from datetime import datetime
-from MPCNETs import TAMPGCRNCNN as Network
+from MPCNETs import MPCGCRNCNN as Network
 from Trainer import Trainer
 from TrainInits import init_seed
 from TrainInits import print_model_parameters
@@ -40,8 +40,6 @@ def get_stock_loader(data_type):
     args.add_argument('--cuda', default=True, type=bool)
     # from data, these below information could be found in .conf file
     #data
-    args.add_argument('--val_ratio', default=config['data']['val_ratio'], type=float)
-    args.add_argument('--test_ratio', default=config['data']['test_ratio'], type=float)
     args.add_argument('--lag', default=config['data']['lag'], type=int)
     args.add_argument('--horizon', default=config['data']['horizon'], type=int)
     args.add_argument('--num_nodes', default=config['data']['num_nodes'], type=int)

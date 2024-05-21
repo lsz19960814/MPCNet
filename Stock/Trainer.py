@@ -31,10 +31,6 @@ class Trainer(object):
             os.makedirs(args.log_dir, exist_ok=True)
         self.logger = get_logger(args.log_dir, name=args.model, debug=args.debug)
         self.logger.info('Experiment log path in: {}'.format(args.log_dir))
-        #if not args.debug:
-        #self.logger.info("Argument: %r", args)
-        # for arg, value in sorted(vars(args).items()):
-        #     self.logger.info("Argument %s: %r", arg, value)
 
     def val_epoch(self, epoch, val_dataloader):
         self.model.eval()
@@ -43,7 +39,6 @@ class Trainer(object):
         with torch.no_grad():
             for batch_idx, (ori_data, MPG, target, label, use_data) in enumerate(val_dataloader):
                 data = ori_data[..., :self.args.input_dim] # input_dim = 3
-                #x_full = ori_data[..., :self.args.input_dim]
                 label = target[..., :self.args.output_dim]
                 output = self.model(data, target, MPG, teacher_forcing_ratio=0.)
                 if self.args.real_value:
@@ -72,7 +67,7 @@ class Trainer(object):
             else:
                 teacher_forcing_ratio = 1.
             output = self.model(data, target, MPG, teacher_forcing_ratio=teacher_forcing_ratio)
-            #print(output.shape)
+            
             if self.args.real_value:
                 label = self.scaler.inverse_transform(label)
             loss = self.loss(output, label)
@@ -156,8 +151,6 @@ class Trainer(object):
 
         #test
         self.model.load_state_dict(best_model)
-        #self.val_epoch(self.args.epochs, self.test_loader)
-        #self.test(self.model, self.args, self.test_loader, self.scaler, self.logger)
         self.test(self.model, self.args, self.train_loader, self.scaler, self.logger)
 
 
@@ -193,8 +186,6 @@ class Trainer(object):
             y_pred = torch.cat(y_pred, dim=0)
         else:
             y_pred = scaler.inverse_transform(torch.cat(y_pred, dim=0))
-        np.save('./{}_true.npy'.format(args.dataset), y_true.cpu().numpy())
-        np.save('./{}_pred.npy'.format(args.dataset), y_pred.cpu().numpy())
         for t in range(y_true.shape[1]):
             mae, rmse, mape, _, _ = All_Metrics(y_pred[:, t, ...], y_true[:, t, ...],
                                                 args.mae_thresh, args.mape_thresh)

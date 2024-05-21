@@ -32,7 +32,6 @@ def init_lr_scheduler(optim, opt):
     '''
     Initialize the learning rate scheduler
     '''
-    #return torch.optim.lr_scheduler.StepLR(optimizer=optim,gamma=opt.lr_scheduler_rate,step_size=opt.lr_scheduler_step)
     return torch.optim.lr_scheduler.MultiStepLR(optimizer=optim, milestones=opt.lr_decay_steps,
                                                 gamma = opt.lr_scheduler_rate)
 
