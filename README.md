@@ -23,7 +23,7 @@ python -u train.py --data_type 2022
 python -u train.py --data_type 2022us
 ```
 
-If **retraining** is required, you need to first obtain stock daily data from tushare and place it in the **new_day_data_csv** sub-folder under the Graph_sim folder. Run **day_sc.py** in the Graph_sim folder, then run **Run_model.py** in the **Stock** folder, and finally run train.py with the parameter **-- need_train**
+Due to upload size limitations, we only uploaded the testing dataset. If **retraining** is required, you need to first obtain stock daily data from tushare or yfinance API and place it in the **new_day_data_csv** sub-folder under the Graph_sim folder. Run **day_sc.py** in the Graph_sim folder, then run **Run_model.py** in the **Stock** folder, and finally run train.py with the parameter **-- need_train**
 
 ```bash
 
